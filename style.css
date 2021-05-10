@@ -1,0 +1,30 @@
+body {
+  text-align: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 1em;
+}
+
+p {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+video, canvas {
+  width: 150px;
+  height: 150px;
+}
+
+p, span {
+  font-size: 20px;
+  margin: 10px;
+}
+
+span {
+  width: 100%;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  overflow-y: hidden;
+  display: block;
+  color: darkcyan;
+  overflow-wrap: break-word;
+}
