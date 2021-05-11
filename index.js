@@ -5,7 +5,44 @@ const video = byId('video');
 const canvas = byId('canvas');
 const output = byId('output');
 const devicesListUI = byId('devices');
+const enableFocusBtn = byId('enable-focus');
+const controlFocus = byId('control-focus');
+let deviceTrack;
 let deviceSelected;
+
+enableFocusBtn.addEventListener('click', event => enableFocus(event));
+
+function enableFocus(event) {
+  // Map focus distance to a slider element.
+  let deviceCapabilities = deviceTrack.getCapabilities();
+  controlFocus.min = deviceCapabilities.focusDistance.min;
+  controlFocus.max = deviceCapabilities.focusDistance.max;
+  controlFocus.step = deviceCapabilities.focusDistance.step;
+  controlFocus.value = deviceTrack.getSettings().focusDistance;
+
+  controlFocus.oninput = function(event) {
+    deviceTrack.applyConstraints({
+      advanced: [
+        {
+          focusMode: 'manual',
+          focusDistance: event.target.value
+        }
+      ]
+    });
+  };
+  controlFocus.hidden = false;
+}
+
+controlFocus.oninput = function(event) {
+  deviceTrack.applyConstraints({
+    advanced: [
+      {
+        focusMode: 'manual',
+        focusDistance: event.target.value
+      }
+    ]
+  });
+};
 
 function showSelectedListGUI(element) {
   const className = 'selected';
@@ -21,8 +58,8 @@ function selectedDevice(event, device, element) {
     mediaStream => {
       video.srcObject = mediaStream;
       console.log(mediaStream.getTracks());
-      let track = mediaStream.getTracks()[0];
-      track
+      deviceTrack = mediaStream.getTracks()[0];
+      deviceTrack
         .applyConstraints({ advanced: [{ focusMode: 'manual' }] })
         .then(r => console.log('Then', r))
         .catch(r => console.log('Catch', r));
@@ -34,6 +71,8 @@ function selectedDevice(event, device, element) {
   setInterval(() => {
     canvas.getContext('2d').drawImage(video, 0, 0, 300, 110);
   }, 100);
+
+  enableFocusBtn.hidden = false;
 }
 
 function associateDeviceWithOptionGUI(devices) {
