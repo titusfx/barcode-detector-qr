@@ -9,12 +9,14 @@ p {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-video, canvas {
+video,
+canvas {
   width: 150px;
   height: 150px;
 }
 
-p, span {
+p,
+span {
   font-size: 20px;
   margin: 10px;
 }
@@ -27,4 +29,17 @@ span {
   display: block;
   color: darkcyan;
   overflow-wrap: break-word;
+}
+
+ol {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  height: 20rem;
+}
+
+.selected {
+  color: white;
+  background-color: darkcyan;
 }
